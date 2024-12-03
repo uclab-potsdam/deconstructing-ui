@@ -53,11 +53,11 @@
      /* display: none; */
  }
 
- footer>.container {
+ .controls-container>.container {
      border: none;
  }
 
- footer>.container>.inner-container {
+ .controls-container>.container>.inner-container {
      display: inline-flex;
      width: 100%;
  }
