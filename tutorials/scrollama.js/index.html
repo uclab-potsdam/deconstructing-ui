@@ -5,9 +5,121 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scrollama.js Tutorial</title>
     <link rel="stylesheet" href="./style.css" />
+    <style>
+        #scrolly {
+            position: relative;
+        }
+
+		article {
+			position: relative;
+			padding: 0 1rem;
+			margin: 0 auto;
+			width: 33%;
+		}
+
+        .step {
+            margin: 2rem auto 4rem auto;
+            background-color: black;
+            color: white;
+            padding: 200px 0px;
+        }
+
+        .step.is-active {
+            background-color: goldenrod;
+            color: black;
+        }
+
+        .step p {
+            text-align: center;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .blue-background {
+            background-color: blue;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to Scrollama.js Tutorial</h1>
+    <main>
+        <section id="intro">
+            <h1 class="intro__hed">Fruit basket!</h1>
+            <p class="intro__dek">Here's my fruit basket</p>
+        </section>
+        <section>
+            <section id="graphic">
+                <div class="graphic__container">
+                    <div id="step__counter">
+                        <p>Start</p>
+                    </div>
+                </div>
+            </section>
+            <section id="scrolly">
+                <article>
+                    <div class="step" data-step="1">
+                        <p>Banana</p>
+                    </div>
+                    <div class="step" data-step="2">
+                        <p>Peach</p>
+                    </div>
+                    <div class="step" data-step="3">
+                        <p>Kiwi</p>
+                    </div>
+                    <div class="step" data-step="4">
+                        <p>Strawberry</p>
+                    </div>
+                    <div class="step" data-step="5">
+                        <p>Apple</p>
+                    </div>
+                </article>
+            </section>
+        </section>
+        <section id="outro">
+            <h2 class="outro__hed">Goodbye!</h2>
+        </section>
+    </main>
     <script src="./libraries/scrollama.min.js"></script>
+    <script>
+        var scrolly = document.querySelector('#scrolly');
+        var article = scrolly.querySelector("article");
+        var graphic = document.querySelector("#step__counter");
+        var step = article.querySelectorAll(".step");
+
+        var scroller = scrollama()
+
+        var fruit = ['🍌', '🍑', '🥝', '🍓', '🍎']
+
+        function handleStepEnter(response) {
+            response.element.classList.add("is-active");
+            graphic.innerHTML = "<p>I love " + fruit[response.index] + "</p>";
+
+            if (response.index === 1) {
+                graphic.classList.add('blue-background')
+            } else {
+                graphic.classList.remove('blue-background')
+            }
+        }
+
+        function handleStepExit(response) {
+            response.element.classList.remove("is-active");
+        }
+
+        function init() {
+            scroller
+                .setup({
+                    step: "#scrolly article .step",
+                    progress: true,
+                    debug: true,
+                    offset: 0.5
+                })
+                .onStepEnter(handleStepEnter)
+                .onStepProgress(function(response) {
+                    console.log(response.progress * 100)
+                })
+                .onStepExit(handleStepExit)
+        }
+
+        init()
+    </script>
 </body>
 </html>
